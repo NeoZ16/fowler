@@ -17,7 +17,7 @@ public class Program
     public static void main(String args[]) 
     {
         String result;
-        System.out.println("Welcome to the dhbw.fowler.Movie Store");
+        System.out.println("Welcome to the main.java.dhbw.fowler.Movie Store");
         Movie m1 = new Movie("movie1", 1);
         Movie m2 = new Movie("movie2", 2);
         Rental r1 = new Rental(m1, 10);

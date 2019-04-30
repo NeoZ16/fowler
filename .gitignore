@@ -1,3 +1,9 @@
+#IDE files
+.idea
+.idea/
+.idea/*
+.idea/workspace.xml
+
 # Compiled class file
 *.class
 

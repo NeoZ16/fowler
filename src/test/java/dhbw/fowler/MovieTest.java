@@ -6,20 +6,20 @@ import static org.junit.Assert.assertEquals;
 
 public class MovieTest {
     private final static String testTitle = "TestTitle";
-    private final static int testPrice = 100;
-    private final static int testPriceUpdated = 200;
+    private final static int testPriceCode = Movie.REGULAR;
+    private final static int testPriceCodeUpdated = Movie.NEW_RELEASE;
 
     @Test
-    public void getPriceCodeTests() {
-        Movie movie = new Movie(testTitle, testPrice);
-        assertEquals(testPrice, movie.getPriceCode());
-        movie.setPriceCode(testPriceUpdated);
-        assertEquals(testPriceUpdated, movie.getPriceCode());
+    public void getAndSetPriceCodeTests() {
+        Movie movie = new Movie(testTitle, testPriceCode);
+        assertEquals(testPriceCode, movie.getPriceCode());
+        movie.setPriceCode(testPriceCodeUpdated);
+        assertEquals(testPriceCodeUpdated, movie.getPriceCode());
     }
 
     @Test
     public void getTitle(){
-        Movie movie = new Movie(testTitle, testPrice);
+        Movie movie = new Movie(testTitle, testPriceCode);
         assertEquals(testTitle, movie.getTitle());
     }
 }

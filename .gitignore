@@ -3,6 +3,7 @@
 .idea/
 .idea/*
 .idea/workspace.xml
+target/
 
 # Compiled class file
 *.class

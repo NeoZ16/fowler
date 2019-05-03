@@ -1,11 +1,11 @@
 package dhbw.fowler;
 
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class CustomerTest {
     private final String testCustomerName = "Momo";

@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.atLeastOnce;
 
 public class CustomerTest {
     private final String testCustomerName = "Momo";
@@ -36,9 +32,9 @@ public class CustomerTest {
 
 
         Customer customer = new Customer(testCustomerName);
-        addMockRentals(customer, mockDataList);
+        addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
-        checkMockRentals(mockDataList);
+        verifyRentalsAndMovies(mockDataList);
 
     }
 
@@ -51,9 +47,9 @@ public class CustomerTest {
 
 
         Customer customer = new Customer(testCustomerName);
-        addMockRentals(customer, mockDataList);
+        addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
-        checkMockRentals(mockDataList);
+        verifyRentalsAndMovies(mockDataList);
 
     }
 
@@ -64,12 +60,22 @@ public class CustomerTest {
         mockDataList.add(new MockDataStructure("New Mock 2", Movie.NEW_RELEASE, 3, 9.0, 2));
 
         Customer customer = new Customer(testCustomerName);
-        addMockRentals(customer, mockDataList);
+        addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
-        checkMockRentals(mockDataList);
+        verifyRentalsAndMovies(mockDataList);
     }
 
-    private void addMockRentals(Customer customer, List<MockDataStructure> mockDataList){
+    private void addRentals(Customer customer, List<MockDataStructure> mockDataList){
+        for(MockDataStructure mockData : mockDataList){
+            Movie movie = new Movie(mockData.movieTitle, mockData.releaseType);
+            Rental rental = new Rental(movie, mockData.getDaysRented());
+            mockData.setMockMovie(movie);
+            mockData.setMockRental(rental);
+            customer.addRental(rental);
+        }
+    }
+
+    /*private void addMockRentals(Customer customer, List<MockDataStructure> mockDataList){
         for(MockDataStructure mockData : mockDataList) {
             Rental mockRental = mock(Rental.class);
             Movie mockMovie = mock(Movie.class);
@@ -81,8 +87,7 @@ public class CustomerTest {
             mockData.setMockRental(mockRental);
             customer.addRental(mockRental);
         }
-
-    }
+    }*/
 
     private void checkStatement(String statement, List<MockDataStructure> mockDataList){
         StringBuilder sb = new StringBuilder();
@@ -101,14 +106,24 @@ public class CustomerTest {
         assertEquals(sb.toString(), statement);
     }
 
-    private void checkMockRentals(List<MockDataStructure> mockDataList){
+    private void verifyRentalsAndMovies (List<MockDataStructure> mockDataList){
+        for(MockDataStructure mockData : mockDataList){
+            assertEquals(mockData.getMovieTitle(), mockData.getMockMovie().getTitle());
+            assertEquals(mockData.getReleaseType(), mockData.getMockMovie().getPriceCode());
+            assertEquals(mockData.getDaysRented(), mockData.getMockRental().getDaysRented());
+            assertEquals(mockData.getMockMovie(), mockData.getMockRental().getMovie());
+        }
+    }
+
+    /*private void checkMockRentals(List<MockDataStructure> mockDataList){
         for(MockDataStructure mockData : mockDataList){
             verify(mockData.getMockRental(), atLeastOnce()).getMovie();
             verify(mockData.getMockRental(), atLeastOnce()).getDaysRented();
             verify(mockData.getMockMovie(), atLeastOnce()).getTitle();
             verify(mockData.getMockMovie(), atLeastOnce()).getPriceCode();
         }
-    }
+<<<<<<< HEAD
+    }*/
 
     private class MockDataStructure {
 

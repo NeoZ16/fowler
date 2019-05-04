@@ -1,7 +1,8 @@
 package dhbw.fowler;
 
 public class NewReleasePrice extends Price {
-    int getPriceCode() {
+    @Override
+    public int getPriceCode() {
         return Movie.NEW_RELEASE;
     }
 

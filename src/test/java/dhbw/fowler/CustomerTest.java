@@ -34,6 +34,7 @@ public class CustomerTest {
         Customer customer = new Customer(testCustomerName);
         addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
+        checkHtmlStatement(customer.htmlStatement(), mockDataList);
         verifyRentalsAndMovies(mockDataList);
 
     }
@@ -49,6 +50,7 @@ public class CustomerTest {
         Customer customer = new Customer(testCustomerName);
         addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
+        checkHtmlStatement(customer.htmlStatement(), mockDataList);
         verifyRentalsAndMovies(mockDataList);
 
     }
@@ -62,6 +64,7 @@ public class CustomerTest {
         Customer customer = new Customer(testCustomerName);
         addRentals(customer, mockDataList);
         checkStatement(customer.statement(), mockDataList);
+        checkHtmlStatement(customer.htmlStatement(), mockDataList);
         verifyRentalsAndMovies(mockDataList);
     }
 
@@ -106,6 +109,26 @@ public class CustomerTest {
         assertEquals(sb.toString(), statement);
     }
 
+    private void checkHtmlStatement(String statement, List<MockDataStructure> mockDataList){
+        StringBuilder sb = new StringBuilder();
+        int totalFrequentRenterPoints = 0;
+        double totalAmount = 0;
+        sb.append("<h1>Rental Record for <em>" +testCustomerName+"</em></h1>\n<table>\n");
+        for(MockDataStructure mockData : mockDataList) {
+            sb.append("\t<tr><td>"+mockData.getMovieTitle()+"</td>"+
+                    "<td>"+mockData.getDaysRented()+"</td>" +
+                    "<td>"+mockData.getAmountOwed()+"</td>" +
+                    "</tr>\n");
+            totalFrequentRenterPoints += mockData.getFrequentRenterPoints();
+            totalAmount += mockData.getAmountOwed();
+        }
+
+        sb.append("</table>\n<p>You owe "+totalAmount+"</p>\n"+
+                "<p>On this rental you've earned "+totalFrequentRenterPoints+" frequent renter points</p>");
+
+        assertEquals(sb.toString(), statement);
+    }
+
     private void verifyRentalsAndMovies (List<MockDataStructure> mockDataList){
         for(MockDataStructure mockData : mockDataList){
             assertEquals(mockData.getMovieTitle(), mockData.getMockMovie().getTitle());
@@ -121,8 +144,6 @@ public class CustomerTest {
             verify(mockData.getMockRental(), atLeastOnce()).getDaysRented();
             verify(mockData.getMockMovie(), atLeastOnce()).getTitle();
             verify(mockData.getMockMovie(), atLeastOnce()).getPriceCode();
-        }
-<<<<<<< HEAD
     }*/
 
     private class MockDataStructure {

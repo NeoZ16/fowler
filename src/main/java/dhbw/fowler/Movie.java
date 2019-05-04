@@ -5,17 +5,28 @@ public class Movie {
     public static final int REGULAR = 0;
     public static final int NEW_RELEASE = 1;
     private String title;
-    private int priceCode;
+    private Price price
     public Movie(String newTitle, int newPriceCode) {
         title = newTitle;
         setPriceCode(newPriceCode);
     }
+
     public int getPriceCode() {
-        return priceCode;
+        return price.getPriceCode();
     }
 
     public void setPriceCode(int arg) {
-        priceCode = arg;
+        switch(arg) {
+            case REGULAR:
+                this.price = new RegularPrice();
+                break;
+            case NEW_RELEASE:
+                this.price = new NewReleasePrice();
+                break;
+            case CHILDRENS:
+                this.price = new ChildrensPrice();
+                break;
+        }
     }
 
     public String getTitle (){
